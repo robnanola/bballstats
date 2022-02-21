@@ -1,7 +1,7 @@
 Bballstats
 ==========
 
-bballstats is a Django app that fetch data from https://stats.nba.com/stats/. For each new endpoint you can define a custom class inheriting the Endpoint class. see: https://github.com/robnanola/bballstats/endpoints/leaders.py for the sample implementation.
+bballstats is a Django app that fetch data from https://stats.nba.com/stats/. For each new endpoint you can define a custom class inheriting the Endpoint class. see: https://github.com/robnanola/bballstats/blob/main/endpoints/leaders.py for the sample implementation.
 
 
 Quick start
