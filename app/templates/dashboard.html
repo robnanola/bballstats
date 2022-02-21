@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    <div class="container">
+        <div class="row mb-4 mt-4">
+            <div class="col">
+                <div class="cards">
+                    <canvas id="chart" width="600" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_scripts %}
+  var canvas = document.getElementById("chart");
+
+  Chart.defaults.global.defaultFontFamily = "Lato";
+  Chart.defaults.global.defaultFontSize = 18;
+
+  // render graph_data context to javascript object format 
+  var data = JSON.parse('{{graph_data|safe}}');
+  var chartOptions = {
+    scale: {
+      ticks: {
+        beginAtZero: true,
+        min: 0,
+        stepSize: 20
+      },
+      pointLabels: {
+        fontSize: 18
+      }
+    },
+    legend: {
+      position: 'left'
+    }
+  };
+
+  var radarChart = new Chart(canvas, {
+    type: 'radar',
+    data: data,
+    options: chartOptions
+  });
+{% endblock %}
