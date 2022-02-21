@@ -9,6 +9,20 @@ from libs.http import Request, Endpoint, DataSet
 
 logger = logging.getLogger(__name__)
 
+def is_valid_season(season):
+    """
+    Validates if season has the correct format.
+    """
+    today = date.today()
+    season = season.split('-')
+
+    if season[0] and season[0].isdigit():
+        if int(season[0]) >=1900 and int(season[0]) <= today.year + 1:
+          if int(season[1]) - int(season[0][2:]) == 1:
+            return True
+
+    return False
+
 class Leaders(Endpoint):
     """
     Consume the leagueleaders/ endpoints
@@ -19,7 +33,7 @@ class Leaders(Endpoint):
         """
         Setup request parameters and execute the GET request
         """
-        if self.is_valid_season is False:
+        if is_valid_season(season) is False:
             raise Exception('Invalid season format (YYYY-YY); ie: 2019-20')
 
         self.parameters = {
@@ -46,8 +60,7 @@ class Leaders(Endpoint):
         season = season.split('-')
 
         if season[0] and season[0].isdigit():
-            season[0] = int(season[0])
-            if season[0] >=1900 and season[0] <= today.season[0] + 1:
+            if int(season[0]) >=1900 and int(season[0]) <= today.year + 1:
               if int(season[1]) - int(season[0][2:]) == 1:
                 return True
 
