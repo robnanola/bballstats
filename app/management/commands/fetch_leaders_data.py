@@ -6,7 +6,7 @@ import logging
 
 from django.core.management.base import BaseCommand, CommandError
 
-from endpoints.leaders import Leaders
+from endpoints.leaders import Leaders, is_valid_season
 
 logger = logging.getLogger(__name__)
 
@@ -26,14 +26,20 @@ class Command(BaseCommand):
         logger.info('Fetching league leaders data...')
         season = options['season']
 
+        season_leaders = None
+
         try:
             if season:
-                season_leaders = Leaders(season)
+                if is_valid_season(season):
+                    season_leaders = Leaders(season)
+                else:
+                    logger.info('Invalid season format (YYYY-YY); ie: 2019-20')
             else:
                 season_leaders = Leaders()
         except Exception as err:
-            logger.error("Data download failed.")
+            logger.info("Data download failed.")
         
-        season_leaders.save_response()
+        if season_leaders:
+            season_leaders.save_response()
 
 
